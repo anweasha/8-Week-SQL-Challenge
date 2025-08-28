@@ -43,7 +43,8 @@ WITH Temp AS (
 )
 
 SELECT *,
-CASE WHEN member = 'Y' THEN DENSE_RANK() OVER (PARTITION BY customer_id, member ORDER BY order_date) ELSE null END AS ranking
+CASE WHEN member = 'Y' THEN DENSE_RANK() OVER (PARTITION BY customer_id, member ORDER BY order_date)
+ELSE null END AS ranking
 FROM Temp;
 ```
 
