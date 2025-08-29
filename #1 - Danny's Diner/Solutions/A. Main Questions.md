@@ -201,3 +201,7 @@ GROUP BY s.customer_id;
 | ----------- | ------ |
 | A           | 1370   |
 | B           | 820    |
+
+---
+
+**Click [here](https://github.com/anweasha/8-Week-SQL-Challenge/blob/main/%231%20-%20Danny's%20Diner/Solutions/B.%20Bonus%20Questions.md) for solutions to Bonus Questions.**
