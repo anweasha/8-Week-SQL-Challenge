@@ -173,3 +173,5 @@ GROUP BY day_of_the_week;
 | Wednesday       | 5                 |
 
 ---
+
+**Click [here](https://github.com/anweasha/8-Week-SQL-Challenge/blob/main/%232%20-%20Pizza%20Runner/Solutions/B.%20Runner%20and%20Customer%20Experience.md) for solutions to B. Runner and Customer Experience.**
