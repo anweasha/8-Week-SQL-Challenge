@@ -1,6 +1,6 @@
 ## B. Runner and Customer Experience
 
-### 1. How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
+### 1. How many runners signed up for each 1 week period? (i.e. week starts `2021-01-01`)
 
 ```sql
 SELECT 1 + FLOOR((registration_date - DATE '2021-01-01')/7) AS week, COUNT(*) AS runner_count
@@ -137,3 +137,5 @@ ORDER BY runner_id;
 | 3         | 50                             |
 
 ---
+
+**Click [here](https://github.com/anweasha/8-Week-SQL-Challenge/blob/main/%232%20-%20Pizza%20Runner/Solutions/C.%20Ingredient%20Optimisation.md) for solutions to C. Ingredient Optimisation.**
