@@ -12,11 +12,10 @@ JOIN pizza_runner.pizza_toppings AS pt ON pt.topping_id = t.tid::int
 GROUP BY pn.pizza_name;
 ```
 
-| pizza_name | standard_ingredients                                                                                           |
-| ---------- | -------------------------------------------------------------------------------------------------------------- |
-| Meatlovers | Bacon, BBQ Sauce, Beef, Cheese, Chicken, Mushrooms, Pepperoni, Salami                                          |
-| Supreme    | Bacon, BBQ Sauce, Beef, Cheese, Chicken, Mushrooms, Onions, Pepperoni, Peppers, Salami, Tomatoes, Tomato Sauce |
-| Vegetarian | Cheese, Mushrooms, Onions, Peppers, Tomatoes, Tomato Sauce                                                     |
+| pizza_name | standard_ingredients                                                  |
+| ---------- | --------------------------------------------------------------------- |
+| Meatlovers | Bacon, BBQ Sauce, Beef, Cheese, Chicken, Mushrooms, Pepperoni, Salami |
+| Vegetarian | Cheese, Mushrooms, Onions, Peppers, Tomatoes, Tomato Sauce            |
 
 ---
 
