@@ -209,3 +209,5 @@ ORDER BY quantity DESC, pt.topping_name;
 | Tomatoes     | 3        |
 
 ---
+
+**Click [here](https://github.com/anweasha/8-Week-SQL-Challenge/blob/main/%232%20-%20Pizza%20Runner/Solutions/D.%20Pricing%20and%20Ratings.md) for solutions to D. Pricing and Ratings.**
