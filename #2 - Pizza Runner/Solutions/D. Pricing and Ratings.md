@@ -125,3 +125,5 @@ JOIN orders_runner AS r ON c.order_id = r.order_id AND r.cancellation = '';
 | 94.44             |
 
 ---
+
+**Click [here](https://github.com/anweasha/8-Week-SQL-Challenge/blob/main/%232%20-%20Pizza%20Runner/Solutions/E.%20Bonus%20Questions.md) for solutions to E. Bonus Questions.**
