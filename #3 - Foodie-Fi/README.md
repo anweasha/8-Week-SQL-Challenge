@@ -10,6 +10,10 @@ Danny created Foodie-Fi with a data driven mindset and wanted to ensure all futu
 ## Available Data
 Danny has shared the data design for Foodie-Fi and also short descriptions on each of the database tables - our case study focuses on only 2 tables but there will be a challenge to create a new table for the Foodie-Fi team.
 
+### Entity Relationship Diagram
+
+<img width="658" height="237" alt="Screenshot 2025-09-11 at 9 35 27 PM" src="https://github.com/user-attachments/assets/93731647-be9f-4615-b32d-d56600bee1c6" />
+
 ### Table 1: plans
 Customers can choose which plans to join Foodie-Fi when they first sign up.
 
