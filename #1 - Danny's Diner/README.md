@@ -17,6 +17,10 @@ Danny has shared with you 3 key datasets for this case study:
 - `menu`
 - `members`
 
+### Entity Relationship Diagram
+
+<img width="582" height="305" alt="Screenshot 2025-09-13 at 8 26 19 PM" src="https://github.com/user-attachments/assets/44b9529f-0540-4da5-a942-e086aa7bad9c" />
+
 ### Table 1: sales
 The `sales` table captures all `customer_id` level purchases with an corresponding `order_date` and `product_id` information for when and what menu items were ordered.
 
