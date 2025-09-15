@@ -59,3 +59,64 @@ ORDER BY event_count;
 | churn         | 71          |
 
 ---
+
+### 4. What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
+
+```sql
+SELECT SUM(CASE WHEN plan_id = 4 THEN 1 ELSE 0 END) AS churn_count,
+ROUND(100.0 * SUM(CASE WHEN plan_id = 4 THEN 1 ELSE 0 END)/COUNT(DISTINCT customer_id), 1) AS churn_percentage
+FROM foodie_fi.subscriptions;
+```
+
+| churn_count | churn_percentage |
+| ----------- | ---------------- |
+| 307         | 30.7             |
+
+---
+
+### 5. How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?
+
+```sql
+WITH Temp AS (
+  SELECT customer_id, plan_id, start_date,
+  LEAD(plan_id) OVER (PARTITION BY customer_id ORDER BY start_date) AS next_plan
+  FROM foodie_fi.subscriptions
+)
+
+SELECT SUM(CASE WHEN plan_id = 0 AND next_plan = 4 THEN 1 ELSE 0 END) AS churn_count,
+ROUND(100.0 * SUM(CASE WHEN plan_id = 0 AND next_plan = 4 THEN 1 ELSE 0 END)/COUNT(DISTINCT customer_id)) AS churn_percentage
+FROM Temp;
+```
+
+| churn_count | churn_percentage |
+| ----------- | ---------------- |
+| 92          | 9                |
+
+---
+
+### 6. What is the number and percentage of customer plans after their initial free trial?
+
+```sql
+WITH Temp AS (
+  SELECT customer_id, plan_id, start_date,
+  LEAD(plan_id) OVER (PARTITION BY customer_id ORDER BY start_date) AS next_plan
+  FROM foodie_fi.subscriptions
+)
+
+SELECT t.next_plan, p.plan_name, COUNT(*) AS customer_count,
+ROUND(100.0 * COUNT(*)/(SELECT COUNT(DISTINCT customer_id) FROM foodie_fi.subscriptions), 1) AS customer_percentage
+FROM Temp AS t
+JOIN foodie_fi.plans AS p ON t.next_plan = p.plan_id
+WHERE t.plan_id = 0
+GROUP BY t.next_plan, p.plan_name
+ORDER BY next_plan;
+```
+
+| next_plan | plan_name     | customer_count | customer_percentage |
+| --------- | ------------- | -------------- | ------------------- |
+| 1         | basic monthly | 546            | 54.6                |
+| 2         | pro monthly   | 325            | 32.5                |
+| 3         | pro annual    | 37             | 3.7                 |
+| 4         | churn         | 92             | 9.2                 |
+
+---
