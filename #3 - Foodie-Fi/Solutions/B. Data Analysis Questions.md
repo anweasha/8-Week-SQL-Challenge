@@ -120,3 +120,58 @@ ORDER BY next_plan;
 | 4         | churn         | 92             | 9.2                 |
 
 ---
+
+### 7. What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?
+
+```sql
+WITH Temp AS (
+  SELECT customer_id, plan_id, ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY start_date DESC) AS rn
+  FROM foodie_fi.subscriptions
+  WHERE start_date <= '2020-12-31'
+)
+SELECT t.plan_id, p.plan_name, COUNT(*) AS customer_count, 
+ROUND(100.0 * COUNT(*)/(SELECT COUNT(DISTINCT customer_id) FROM foodie_fi.subscriptions), 1) AS customer_percentage
+FROM Temp AS t
+JOIN foodie_fi.plans AS p ON t.plan_id = p.plan_id
+WHERE t.rn = 1
+GROUP BY t.plan_id, p.plan_name;
+```
+
+| plan_id | plan_name     | customer_count | customer_percentage |
+| ------- | ------------- | -------------- | ------------------- |
+| 0       | trial         | 19             | 1.9                 |
+| 1       | basic monthly | 224            | 22.4                |
+| 2       | pro monthly   | 326            | 32.6                |
+| 3       | pro annual    | 195            | 19.5                |
+| 4       | churn         | 236            | 23.6                |
+
+---
+
+### 8. How many customers have upgraded to an annual plan in 2020?
+
+```sql
+SELECT COUNT(*) AS customer_count
+FROM foodie_fi.subscriptions
+WHERE plan_id = 3 AND EXTRACT(YEAR FROM start_date) = 2020;
+```
+
+| customer_count |
+| -------------- |
+| 195            |
+
+---
+
+### 9. How many days on average does it take for a customer to upgrade to an annual plan from the day they join Foodie-Fi?
+
+```sql
+SELECT ROUND(AVG(a.start_date - s.start_date), 2) AS avg_days_to_upgrade
+FROM foodie_fi.subscriptions AS s
+JOIN foodie_fi.subscriptions AS a ON a.customer_id = s.customer_id AND a.plan_id = 3 
+WHERE s.plan_id = 0;
+```
+
+| avg_days_to_upgrade |
+| ------------------- |
+| 104.62              |
+
+---
