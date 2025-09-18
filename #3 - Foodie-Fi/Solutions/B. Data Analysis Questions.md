@@ -175,3 +175,56 @@ WHERE s.plan_id = 0;
 | 104.62              |
 
 ---
+
+### 10. Can you further breakdown this average value into 30 day periods (i.e. 0-30 days, 31-60 days etc)?
+
+```sql
+WITH upgrade AS (
+  SELECT s.customer_id, a.start_date - s.start_date AS days_to_upgrade
+  FROM foodie_fi.subscriptions AS s
+  JOIN foodie_fi.subscriptions AS a ON a.customer_id = s.customer_id AND a.plan_id = 3 
+  WHERE s.plan_id = 0
+)
+SELECT (WIDTH_BUCKET(days_to_upgrade, 0, 360, 12) - 1) * 30 + 1 || '-' || WIDTH_BUCKET(days_to_upgrade, 0, 360, 12) * 30 AS upgrade_period,
+COUNT(*) as customer_count, ROUND(AVG(days_to_upgrade), 2) AS avg_days_to_upgrade
+FROM upgrade
+GROUP BY upgrade_period
+ORDER BY MIN(days_to_upgrade);
+```
+
+| upgrade_period | customer_count | avg_days_to_upgrade |
+| -------------- | -------------- | ------------------- |
+| 1-30           | 48             | 9.54                |
+| 31-60          | 25             | 41.84               |
+| 61-90          | 33             | 70.88               |
+| 91-120         | 35             | 99.83               |
+| 121-150        | 43             | 133.05              |
+| 151-180        | 35             | 161.54              |
+| 181-210        | 27             | 190.33              |
+| 211-240        | 4              | 224.25              |
+| 241-270        | 5              | 257.20              |
+| 271-300        | 1              | 285.00              |
+| 301-330        | 1              | 327.00              |
+| 331-360        | 1              | 346.00              |
+
+---
+
+### 11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
+
+```sql
+WITH Temp AS (
+  SELECT customer_id, plan_id, start_date,
+  LEAD(plan_id) OVER (PARTITION BY customer_id ORDER BY start_date) AS next_plan
+  FROM foodie_fi.subscriptions
+  WHERE EXTRACT(YEAR FROM start_date) = 2020
+)
+SELECT COUNT(*) AS customer_count
+FROM Temp
+WHERE plan_id = 2 AND next_plan = 1;
+```
+
+| customer_count |
+| -------------- |
+| 0              |
+
+---
